@@ -1,0 +1,46 @@
+<!DOCTYPE html> <!-- index.html Reservation system developed by R. Amaranathan -->
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<body>
+
+<div ng-app="reservationApp" ng-controller="reservationCtrl">
+
+<form id="form1" ng-submit="get_seat_availability_details(selectedBus.service_id);">
+<p>Select a Bus to make a reservation:</p>
+<select ng-model="selectedBus" ng-options="bus.bus_detail for bus in records">
+</select>
+<h1>You had selected: {{selectedBus.bus_detail}}</h1>
+<p>Travel Date and Time: {{selectedBus.start_date_time}}</p>
+<p>Service Id: {{selectedBus.service_id}}</p>
+<button type="submit">Get Seat Availability</button>
+</form><br>
+
+<table border='1' cellspacing='0' cellpadding='2' width="30%">
+	<tr><th width="10%">Service Id</th><th width="5%">Seat No</th><th width="15%">Available or Booked</th></tr>
+	<tr ng-repeat="seat in seats">
+	<td>{{seat.service_id}}</td>
+	<td>{{seat.seat_no}}</td>
+	<td><input type="checkbox" ng-checked="{{seat.booked}}" ng-model="seat.booked"> {{seat.booked==true ? 'Booked' : 'Available'}}</td>
+	</tr>
+</table><br>
+
+</div>
+
+<script>
+var app = angular.module('reservationApp', []);
+app.controller('reservationCtrl', function($scope, $http) {
+	$http.get("get_bus_list.php").then(function (response) {
+		$scope.records = response.data;
+	});
+
+	$scope.get_seat_availability_details = function(service_id){
+		$http.post('get_seat_details.php',{"service_id":service_id }).then(function(response){
+			$scope.seats = response.data;
+		});
+	};
+
+});
+</script>
+
+</body>
+</html>

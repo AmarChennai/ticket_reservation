@@ -1,0 +1,254 @@
+File Name : Release Note.txt
+
+Step 01:
+	Create a sub directory called "ticket_booking_by_Amar" within the web server home directory.
+	If you use XAMPP then it will be C:\xampp\htdocs\ticket_booking_by_Amar
+Step 02:
+	Copy all my files within the folder C:\xampp\htdocs\ticket_booking_by_Amar
+	required files are index.html, connect_database.php, get_bus_list.php, get_seat_details.php
+Step 03:
+	You may use phpMyAdmin
+	Create a Database called "ticket_booking_db" in MySQL
+
+	create DATABASE ticket_booking_db;
+
+	use ticket_booking_db;
+
+	or you may use one of your existing database in MySQL
+	
+	select or go to that Database and select SQL window to create the following tables
+Step 04:
+	Create a table called "bus_service_master" by using the below SQL
+	
+	CREATE TABLE IF NOT EXISTS `bus_service_master` (
+	`id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'An unique and auto generated Record id for each record',
+	`start_date_time` datetime NOT NULL COMMENT 'Bus Service starting date and time',
+	`starting_place` varchar(30) NOT NULL COMMENT 'Starting place, source',
+	`destination_place` varchar(30) NOT NULL COMMENT 'Destination place',
+	`total_capacity` int(3) NOT NULL COMMENT 'Total no of seats',
+	`service_id` varchar(10) NOT NULL COMMENT 'Unique Service Id, for each trip',
+	`closed` varchar(3) NOT NULL COMMENT 'Reservation is open or closed? No means Open, Yes means Closed',
+	`created_at` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'When this record is created',
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `service_id_uniq` (`service_id`)
+	) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='bus_service_master table stores all details about each Bus service';
+
+Step 05:
+	Create a table called "bus_service_seat_detail" by using the below SQL
+
+	CREATE TABLE IF NOT EXISTS `bus_service_seat_detail` (
+	`id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'An unique and auto generated Record id for each record',
+	`service_id` varchar(10) NOT NULL COMMENT 'Unique Service Id, for each trip',
+	`seat_no` int(3) NOT NULL COMMENT 'Seat No',
+	`passenger_name` varchar(30) DEFAULT NULL COMMENT 'Passenger Name',
+	`booked` int(3) DEFAULT '0' COMMENT 'This seat is reserved/booked or not',
+	`created_at` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'When this record is created',
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `service_id_seat_no_uniq` (`service_id`,`seat_no`)
+	) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='bus_service_seat_detail table reflects seat availability';
+
+Step 06:
+	Insert some master records by using the below SQL
+	
+	INSERT INTO `bus_service_master` (`id`, `start_date_time`, `starting_place`, `destination_place`, `total_capacity`, `service_id`, `closed`, `created_at`) 
+	VALUES (NULL, '2017-09-15 08:00:00', 'Chennai', 'Bangalore', '40', '101', 'No', CURRENT_TIMESTAMP), (NULL, '2017-09-15 10:00:00', 'Chennai', 'Bangalore', '40', '102', 'No', CURRENT_TIMESTAMP);
+
+	INSERT INTO `bus_service_master` (`id`, `start_date_time`, `starting_place`, `destination_place`, `total_capacity`, `service_id`, `closed`, `created_at`) 
+	VALUES (NULL, '2017-09-15 09:00:00', 'Bangalore', 'Chennai', '40', '201', 'No', CURRENT_TIMESTAMP), (NULL, '2017-09-15 11:00:00', 'Bangalore', 'Chennai', '40', '202', 'No', CURRENT_TIMESTAMP);
+
+Step 07:
+	Insert some master records by using the below SQL
+
+INSERT INTO `bus_service_seat_detail` (`id`, `service_id`, `seat_no`, `passenger_name`, `booked`, `created_at`) VALUES 
+(NULL, '101', '1', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '2', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '3', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '4', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '5', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '6', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '7', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '8', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '9', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '10', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '11', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '12', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '13', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '14', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '15', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '16', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '17', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '18', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '19', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '20', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '21', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '22', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '23', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '24', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '25', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '26', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '27', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '28', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '29', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '30', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '31', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '32', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '33', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '34', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '35', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '36', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '37', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '38', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '39', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '101', '40', NULL, '0', CURRENT_TIMESTAMP);
+
+INSERT INTO `bus_service_seat_detail` (`id`, `service_id`, `seat_no`, `passenger_name`, `booked`, `created_at`) VALUES 
+(NULL, '102', '1', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '2', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '3', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '4', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '5', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '6', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '7', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '8', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '9', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '10', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '11', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '12', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '13', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '14', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '15', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '16', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '17', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '18', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '19', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '20', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '21', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '22', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '23', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '24', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '25', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '26', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '27', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '28', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '29', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '30', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '31', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '32', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '33', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '34', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '35', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '36', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '37', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '38', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '39', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '102', '40', NULL, '0', CURRENT_TIMESTAMP);
+
+INSERT INTO `bus_service_seat_detail` (`id`, `service_id`, `seat_no`, `passenger_name`, `booked`, `created_at`) VALUES 
+(NULL, '201', '1', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '2', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '3', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '4', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '5', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '6', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '7', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '8', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '9', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '10', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '11', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '12', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '13', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '14', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '15', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '16', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '17', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '18', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '19', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '20', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '21', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '22', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '23', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '24', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '25', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '26', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '27', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '28', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '29', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '30', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '31', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '32', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '33', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '34', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '35', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '36', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '37', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '38', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '39', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '201', '40', NULL, '0', CURRENT_TIMESTAMP);
+
+INSERT INTO `bus_service_seat_detail` (`id`, `service_id`, `seat_no`, `passenger_name`, `booked`, `created_at`) VALUES 
+(NULL, '202', '1', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '2', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '3', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '4', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '5', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '6', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '7', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '8', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '9', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '10', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '11', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '12', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '13', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '14', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '15', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '16', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '17', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '18', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '19', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '20', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '21', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '22', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '23', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '24', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '25', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '26', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '27', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '28', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '29', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '30', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '31', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '32', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '33', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '34', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '35', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '36', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '37', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '38', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '39', NULL, '0', CURRENT_TIMESTAMP),
+(NULL, '202', '40', NULL, '0', CURRENT_TIMESTAMP);
+
+Step 08:
+	Open and edit the file called "connect_database.php"
+	In this file specify Database server name or IP address, Database user Id, Password and Database name
+	Make sure all the values are correct w.r.t. your server, else it will not work.
+Step 09:
+	Open a Web browser say Google Chrome then in the URL box give the host name and folder name for example
+	http://localhost/ticket_booking_by_Amar/
+Step 10:
+	Select a record from the select box or dropdown box, this is to choose a bus for booking the tickets 
+Step 11:
+	Click the button to get seats availability for the selected Bus.
+Step 12:
+	The Table shows 3 columns, 1st column shows service Id this is used to link 2 tables (master and details)
+	2nd column shows the Seat No and the 3rd column shows whether this seat No is available for booking or Booked already.
+	Click the check box next to any seat No for Booking Similarly Unclick for cancel the Booking.
+Step 13:
+	Pending item or known issue:
+	Ticket booking or cancel of booking is not saved back into Database.
+	CSS or Bootstrap is not applied
+	Many enhancement can be done later
+
+If there is a problem in using then kindly let me know, Thanking you.
+
+R. Amaranathan
+9790764393
